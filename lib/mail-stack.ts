@@ -1,5 +1,4 @@
 import { Stack, StackProps } from "aws-cdk-lib";
-import { DomainName } from "aws-cdk-lib/aws-apigateway";
 import { HostedZone, MxRecord, TxtRecord } from "aws-cdk-lib/aws-route53";
 import { Construct } from "constructs";
 
@@ -8,7 +7,7 @@ export interface MailStackProps extends StackProps {
   domainName: string
 }
 /**
- * Set up Route53 records to allow improvmx.com to allow email forwarding via improvmx.com
+ * Set up Route53 records to allow email forwarding via improvmx.com
  */
 export class MailStack extends Stack {
   constructor(scope: Construct, id: string, props: MailStackProps) {
@@ -34,12 +33,5 @@ export class MailStack extends Stack {
       ],
       zone: hostedZone,
     })
-
-    // The code that defines your stack goes here
-
-    // example resource
-    // const queue = new sqs.Queue(this, 'DavidosborneUkQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
   }
 }

@@ -5,7 +5,6 @@ import { AaaaRecord, ARecord, HostedZone, RecordTarget } from 'aws-cdk-lib/aws-r
 import { CloudFrontTarget } from 'aws-cdk-lib/aws-route53-targets';
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment';
 import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export interface WwwStackProps extends StackProps {
   hostedZoneId: string
@@ -26,13 +25,10 @@ export class WwwStack extends Stack {
     })
 
     const cloudFrontToS3 = new CloudFrontToS3(this, 'cloudfrontToS3', {
-      bucketProps: {
-        
-      },
       cloudFrontDistributionProps: {
-        //certificate: Certificate.fromCertificateArn(this, 'certificate', certificateArn),
+        certificate: Certificate.fromCertificateArn(this, 'certificate', certificateArn),
         defaultRootObject: 'index.html',
-        //domainNames: [domainName, wwwDomainName],
+        domainNames: [domainName, wwwDomainName],
       },
     })
 
@@ -41,29 +37,29 @@ export class WwwStack extends Stack {
       destinationBucket: cloudFrontToS3.s3Bucket!
     })
 
-    // const recordTarget = RecordTarget.fromAlias(new CloudFrontTarget(cloudFrontToS3.cloudFrontWebDistribution))
+    const recordTarget = RecordTarget.fromAlias(new CloudFrontTarget(cloudFrontToS3.cloudFrontWebDistribution))
 
-    // new ARecord(this, 'rootARecord', {
-    //   target: recordTarget,
-    //   zone: hostedZone,
-    //   recordName: domainName,
-    // })
-    // new AaaaRecord(this, 'rootAaaaRecord', {
-    //   target: recordTarget,
-    //   zone: hostedZone,
-    //   recordName: domainName,
-    // })
+    new ARecord(this, 'rootARecord', {
+      target: recordTarget,
+      zone: hostedZone,
+      recordName: domainName,
+    })
+    new AaaaRecord(this, 'rootAaaaRecord', {
+      target: recordTarget,
+      zone: hostedZone,
+      recordName: domainName,
+    })
 
-    // new ARecord(this, 'wwwARecord', {
-    //   target: recordTarget,
-    //   zone: hostedZone,
-    //   recordName: wwwDomainName,
-    // })
-    // new AaaaRecord(this, 'wwwAaaaRecord', {
-    //   target: recordTarget,
-    //   zone: hostedZone,
-    //   recordName: wwwDomainName,
-    // })
+    new ARecord(this, 'wwwARecord', {
+      target: recordTarget,
+      zone: hostedZone,
+      recordName: wwwDomainName,
+    })
+    new AaaaRecord(this, 'wwwAaaaRecord', {
+      target: recordTarget,
+      zone: hostedZone,
+      recordName: wwwDomainName,
+    })
     new CfnOutput(this, 'CloudFrontDomain', {
       value: cloudFrontToS3.cloudFrontWebDistribution.distributionDomainName,
     })
