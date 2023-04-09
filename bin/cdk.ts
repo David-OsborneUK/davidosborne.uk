@@ -2,13 +2,13 @@
 import 'source-map-support/register';
 import {App} from 'aws-cdk-lib';
 import { WwwStack } from '../lib/www-stack';
-import { MailStack } from '../lib/mail-stack';
+import { ImprovMxMailForwarderStack } from '../lib/improvmx-mail-forwarder-stack';
 import {config} from '../config'
 
-const {hostedZoneId, domainName, certificateArn} = config
+const {hostedZoneId, domainName, certificateArn, stackPrefix} = config
 
 const app = new App();
-new WwwStack(app, 'WwwStack', {
+new WwwStack(app, `${stackPrefix}-WwwStack`, {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */
@@ -26,7 +26,7 @@ new WwwStack(app, 'WwwStack', {
   domainName, 
   certificateArn,
 });
-new MailStack(app, 'MailStack', {
+new ImprovMxMailForwarderStack(app, `${stackPrefix}-ImprovMxMailForwarderStack`, {
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
   hostedZoneId,
   domainName,

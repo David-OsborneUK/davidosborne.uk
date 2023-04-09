@@ -2,15 +2,15 @@ import { Stack, StackProps } from "aws-cdk-lib";
 import { HostedZone, MxRecord, TxtRecord } from "aws-cdk-lib/aws-route53";
 import { Construct } from "constructs";
 
-export interface MailStackProps extends StackProps {
+export interface ImprovMxMailForwarderStackProps extends StackProps {
   hostedZoneId: string
   domainName: string
 }
 /**
  * Set up Route53 records to allow email forwarding via improvmx.com
  */
-export class MailStack extends Stack {
-  constructor(scope: Construct, id: string, props: MailStackProps) {
+export class ImprovMxMailForwarderStack extends Stack {
+  constructor(scope: Construct, id: string, props: ImprovMxMailForwarderStackProps) {
     super(scope, id, props);
     const {hostedZoneId, domainName} = props
 
