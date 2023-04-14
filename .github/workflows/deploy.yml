@@ -10,6 +10,7 @@ permissions:
     
 env:
   AWS_REGION: 'eu-west-1'
+  AWS_ROLE_ARN: 'arn:aws:iam:${{secrets.AWS_ACCOUNT_ID}}:role/${{secrets.AWS_ACTIONS_ROLE_NAME}}'
 
 jobs:
   deploy:
@@ -25,7 +26,7 @@ jobs:
       - name: Assume AWS deployment role
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam:${{secrets.AWS_ACCOUNT_ID}}:role/${{secrets.AWS_ACTIONS_ROLE_NAME}}
+          role-to-assume: ${{env.AWS_ROLE_ARN}}
           role-session-name: deploy_davidosborneuk
           aws-region: ${{env.AWS_REGION}}
       - name: Deploy
