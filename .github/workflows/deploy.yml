@@ -10,7 +10,7 @@ permissions:
     
 env:
   AWS_REGION: 'eu-west-1'
-  AWS_ROLE_ARN: 'arn:aws:iam:${{secrets.AWS_ACCOUNT_ID}}:role/${{secrets.AWS_ACTIONS_ROLE_NAME}}'
+  AWS_ROLE_ARN: 'arn:aws:iam::${{secrets.AWS_ACCOUNT_ID}}:role/${{secrets.AWS_ACTIONS_ROLE_NAME}}'
 
 jobs:
   deploy:
