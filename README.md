@@ -1,14 +1,5 @@
-# Welcome to your CDK TypeScript project
+# davidosborne.uk
 
-This is a blank project for CDK development with TypeScript.
+Very basic static web site that deploys to AWS S3/Cloudfront via CDK, and sets up the DNS records in Route53
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
-
-## Useful commands
-
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+It also has a stack that configures some DNS records that allow for aliasing of email addresses via https://improvmx.com.
